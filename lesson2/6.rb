@@ -11,18 +11,21 @@ class Basket
     @basket[title] = {price => number}
   end
   def pay
-    puts @basket.inspect
+    #puts @basket.inspect
     @basket.each do |title, hash|
       price = 0
       number = 0
       hash.each { |a, b| price = a; number = b}
-      puts "#{title} - #{price * number}"
+      #puts "#{title} - #{price * number}"
       @sum += price * number
     end
 
-    puts "Total - #@sum"
+    #puts "Total - #@sum"
+    return @sum
   end
 end
+
+__END__
 
 User = Basket.new
 
