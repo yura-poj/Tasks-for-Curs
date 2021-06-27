@@ -1,8 +1,6 @@
 FactoryBot.define do
   factory :station do
-    name do |n|
-      "Station name #{n}"
-    end
+    sequence(:name) {|n| "Station name #{n}"}
 
     initialize_with { attributes }
   end
