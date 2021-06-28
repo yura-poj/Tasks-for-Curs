@@ -1,5 +1,5 @@
-require 'train'
-require 'passenger_carriage'
+require_relative 'train'
+require_relative 'passenger_carriage'
 class PassengerTrain < Train
   def type
     :passenger

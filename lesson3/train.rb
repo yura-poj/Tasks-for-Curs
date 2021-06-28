@@ -9,7 +9,7 @@
 # Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
-  attr_accessor :speed
+  attr_accessor :speed, :number
 
   def initialize(number)
     @number = number
@@ -34,7 +34,7 @@ class Train
     remove_carriage!
   end
 
-  def add_route(route:)
+  def add_route(route)
     @route = route
     @location = 0
   end
