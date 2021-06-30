@@ -14,6 +14,14 @@ class Station
   def initialize(name)
     @name = name
     @trains_list = []
+    valid!
+  end
+
+  def valid?
+    valid!
+    true
+  rescue
+    false
   end
 
   def add_train(train)
@@ -27,6 +35,12 @@ class Station
 
   def train_leave
     @trains_list.shift
+  end
+
+  private
+
+  def valid!
+    raise 'value is empty' if @name == nil || @name == ""
   end
 end
 __END__

@@ -15,8 +15,10 @@ class Train
   include InstanceCounter
   attr_accessor :speed, :number
 
+  NUMBER_FORMAT = /^(\d|[a-z]|[а-я]){3}[-]?(\d|[a-z]|[а-я]){2}$/i
+
   def self.find(number_find)
-    puts ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s}
+    ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s}
     return nil
   end
 
@@ -24,7 +26,15 @@ class Train
     @number = number.to_s
     @speed = 0
     @carriages = []
+    valid!
     register_instance
+  end
+
+  def valid?
+    valid!
+    true
+  rescue
+    false
   end
 
   def stop
@@ -69,10 +79,17 @@ class Train
     :nil
   end
 
-  private
+  protected
 
   def add_carriage!(carriage)
     @carriages.push(carriage)
+  end
+
+  private
+
+  def valid!
+    raise 'value is empty' if @number == nil
+    raise 'format is not right' if @number !~ NUMBER_FORMAT
   end
 
   def types_of_train_and_carriage_are_not_equal(carriage)

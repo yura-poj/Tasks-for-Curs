@@ -103,21 +103,21 @@ class Conductor
       when 0
         break
       when 1
-        create_cargo_train
+        create_train_with_type(CargoTrain)
       when 2
-        create_passenger_train
+        create_train_with_type(PassengerTrain)
       end
     end
   end
 
-  def create_cargo_train
+  def create_train_with_type(obj_with_type)
     puts 'Enter a number'
-    @trains.push(CargoTrain.new(gets.to_i))
-  end
-
-  def create_passenger_train
-    puts 'Enter a number'
-    @trains.push(PassengerTrain.new(gets.to_i))
+    @trains.push(obj_with_type.new(gets.chomp))
+    puts "You create #{@trains.last.number} train"
+  rescue Exception => e
+    puts e.message
+    puts "try again...\n"
+    retry
   end
 
   def act_with_chosed_train
@@ -203,14 +203,24 @@ class Conductor
 
   def create_station
     puts 'Enter a name'
-    @stations.push Station.new(gets)
+    @stations.push(Station.new(gets.chomp))
+    puts "You create #{@stations.last.name} station"
+  rescue Exception => e
+    puts e.message
+    puts "try again...\n"
+    retry
   end
 
   def create_route
     puts 'Enter number of first and last station'
     puts_every_station
-    @routes.push(Route.new(break_station: @stations[gets.to_i], finish_station: @stations[gets.to_i]))
-  end
+    begin
+    @routes.push(Route.new(start_station: @stations[gets.to_i], finish_station: @stations[gets.to_i]))
+    puts "You create #{@routes.last} station"
+    rescue Exception => e
+      puts e.message
+    end
+    end
 
   def act_with_station_from_route
     route = choose_route

@@ -8,8 +8,17 @@
 require_relative 'station.rb'
 class Route
   attr_reader :route_list
+
   def initialize(start_station:, finish_station:)
     @route_list = [start_station, finish_station]
+    valid!
+  end
+
+  def valid?
+    valid!
+    true
+  rescue
+    false
   end
 
   def add_station(station:)
@@ -20,6 +29,12 @@ class Route
     return 'impossible' if obj == @route_list[0] && obj == route_list[-1]
 
     @route_list.delete(obj)
+  end
+
+  private
+
+  def valid!
+    raise 'Value is not object' if @route_list.first.class != Class ||  @route_list.last.class != Class
   end
 end
 
