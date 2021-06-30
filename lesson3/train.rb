@@ -1,3 +1,5 @@
+require_relative 'manufacturer'
+require_relative 'instance_counter'
 # Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
 # Может набирать скорость
 # Может возвращать текущую скорость
@@ -9,12 +11,20 @@
 # Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
+  include Manufacturer
+  include InstanceCounter
   attr_accessor :speed, :number
 
+  def self.find(number_find)
+    puts ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s}
+    return nil
+  end
+
   def initialize(number)
-    @number = number
+    @number = number.to_s
     @speed = 0
     @carriages = []
+    register_instance
   end
 
   def stop
@@ -51,11 +61,9 @@ class Train
     previous_station!
   end
 
-  def show_route
-    "Stations -> Previous: #{@route[@location - 1]} Current: #{@route[@location]} Next: #{@route[@location + 1]}"
+  def print_route
+    puts "Stations -> Previous: #{@route[@location - 1]} Current: #{@route[@location]} Next: #{@route[@location + 1]}"
   end
-
-  protected
 
   def type
     :nil

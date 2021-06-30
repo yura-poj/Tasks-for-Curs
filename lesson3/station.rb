@@ -7,6 +7,9 @@
 =end
 class Station
   attr_reader :trains_list, :name
+  def self.all
+    p ObjectSpace.each_object(self).to_a
+  end
 
   def initialize(name)
     @name = name
