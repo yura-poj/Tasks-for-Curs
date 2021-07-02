@@ -5,7 +5,8 @@ class PassengerTrain < Train
     :passenger
   end
 
-  def add_carriage_with_own_type
-    add_carriage!(PassengerCarriage.new)
+  # Im not sure about it
+  def add_carriage_with_own_type(number)
+    add_carriage!(PassengerCarriage.new(number))
   end
 end

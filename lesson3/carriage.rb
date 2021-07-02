@@ -8,6 +8,7 @@ class Carriage
   def initialize
     register_instance
   end
+
   def type
     nil
   end

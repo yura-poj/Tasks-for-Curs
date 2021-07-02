@@ -3,8 +3,8 @@ require_relative '../lesson3/station'
 require_relative '../lesson3/train'
 
 RSpec.describe Station do
-  subject {described_class.new('A')}
-  let(:trains) {build_list(:train, 2)}
+  subject { described_class.new('A') }
+  let(:trains) { build_list(:train, 2) }
 
   describe 'train_leave' do
     before do

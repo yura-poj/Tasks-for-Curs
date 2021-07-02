@@ -3,7 +3,7 @@ require_relative 'passenger_train'
 
 class RemoteTrain
   def initialize
-    @guide_about_train = "0 - back 1 - create 2 - choose train"
+    @guide_about_train = '0 - back 1 - create 2 - choose train'
     @trains = []
   end
 
@@ -25,7 +25,7 @@ class RemoteTrain
   private
 
   def puts_every_train
-    @trains.each_with_index { |train, n| puts "#{n} - #{train.number}"}
+    @trains.each_with_index { |train, n| puts "#{n} - #{train.number}" }
   end
 
   def create_train
@@ -72,7 +72,7 @@ class RemoteTrain
   def choose_train
     puts 'Enter number of train'
     puts_every_train
-    return @trains[gets.to_i]
+    @trains[gets.to_i]
   end
 
   def act_with_carriage(train)
@@ -108,11 +108,11 @@ class RemoteTrain
   def choose_route
     puts 'Enter number of route'
     puts_every_route
-    return @routes[gets]
+    @routes[gets]
   end
 
   def puts_every_route
-    route.each_with_index { |route, n| puts "#{n} - #{route}"}
+    route.each_with_index { |route, n| puts "#{n} - #{route}" }
   end
 
   def act_with_route_of_train

@@ -14,12 +14,13 @@ class Train
   include Manufacturer
   include InstanceCounter
   attr_accessor :speed, :number
+  attr_reader :carriages
 
-  NUMBER_FORMAT = /^(\d|[a-z]|[а-я]){3}[-]?(\d|[a-z]|[а-я]){2}$/i
+  NUMBER_FORMAT = /^(\d|[a-z]|[а-я]){3}-?(\d|[a-z]|[а-я]){2}$/i
 
   def self.find(number_find)
-    ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s}
-    return nil
+    ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s }
+    nil
   end
 
   def initialize(number)
@@ -33,7 +34,7 @@ class Train
   def valid?
     valid!
     true
-  rescue
+  rescue StandardError
     false
   end
 
@@ -75,8 +76,12 @@ class Train
     puts "Stations -> Previous: #{@route[@location - 1]} Current: #{@route[@location]} Next: #{@route[@location + 1]}"
   end
 
+  def each_carriage(&block)
+    @carriages.each(&block)
+  end
+
   def type
-    :nil
+    nil
   end
 
   protected
@@ -88,16 +93,16 @@ class Train
   private
 
   def valid!
-    raise 'value is empty' if @number == nil
+    raise 'value is empty' if @number.nil?
     raise 'format is not right' if @number !~ NUMBER_FORMAT
   end
 
-  def types_of_train_and_carriage_are_not_equal(carriage)
+  def types_of_train_and_carriage_are_not_equal?(carriage)
     carriage.type != type
   end
 
   def train_move?
-    @location >= length(@route)
+    @speed > 0
   end
 
   def remove_carriage!
@@ -120,3 +125,10 @@ class Train
     @location -= 1
   end
 end
+__END__
+require_relative 'carriage'
+train = Train.new(12345)
+train.add_carriage(Carriage.new)
+train.add_carriage(Carriage.new)
+b = proc {|a| puts a}
+train.act_with_carriage_list {|a| puts "#{a} - ggashas" }

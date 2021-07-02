@@ -4,18 +4,18 @@ class Quadratic_equation
     @b = b
     @c = c
   end
+
   def D
-    d = @b ** 2 - 4 * @a * @c
+    d = @b**2 - 4 * @a * @c
     puts "D = #{d}"
     if d > 0
       puts "x1 = #{root(d, 1)}"
-      if d != 0
-        puts "x2 = #{root(d, -1)}"
-      end
+      puts "x2 = #{root(d, -1)}" if d != 0
     else
-      puts "equation dont have roots"
+      puts 'equation dont have roots'
     end
   end
+
   def root(d, value)
     (Math.sqrt(d) * value - @b) / (2 * @a)
   end
