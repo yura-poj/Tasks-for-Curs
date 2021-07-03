@@ -1,3 +1,5 @@
+require_relative 'manufacturer'
+require_relative 'instance_counter'
 # Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
 # Может набирать скорость
 # Может возвращать текущую скорость
@@ -9,12 +11,31 @@
 # Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
-  attr_accessor :speed
+  include Manufacturer
+  include InstanceCounter
+  attr_accessor :speed, :number
+  attr_reader :carriages
+
+  NUMBER_FORMAT = /^(\d|[a-z]|[а-я]){3}-?(\d|[a-z]|[а-я]){2}$/i
+
+  def self.find(number_find)
+    ObjectSpace.each_object(self).to_a.each { |obj| return obj if obj.number == number_find.to_s }
+    nil
+  end
 
   def initialize(number)
-    @number = number
+    @number = number.to_s
     @speed = 0
     @carriages = []
+    valid!
+    register_instance
+  end
+
+  def valid?
+    valid!
+    true
+  rescue StandardError
+    false
   end
 
   def stop
@@ -34,7 +55,7 @@ class Train
     remove_carriage!
   end
 
-  def add_route(route:)
+  def add_route(route)
     @route = route
     @location = 0
   end
@@ -51,28 +72,37 @@ class Train
     previous_station!
   end
 
-  def show_route
-    "Stations -> Previous: #{@route[@location - 1]} Current: #{@route[@location]} Next: #{@route[@location + 1]}"
+  def print_route
+    puts "Stations -> Previous: #{@route[@location - 1]} Current: #{@route[@location]} Next: #{@route[@location + 1]}"
+  end
+
+  def each_carriage(&block)
+    @carriages.each(&block)
+  end
+
+  def type
+    nil
   end
 
   protected
-
-  def type
-    :nil
-  end
-
-  private
 
   def add_carriage!(carriage)
     @carriages.push(carriage)
   end
 
-  def types_of_train_and_carriage_are_not_equal(carriage)
+  private
+
+  def valid!
+    raise 'value is empty' if @number.nil?
+    raise 'format is not right' if @number !~ NUMBER_FORMAT
+  end
+
+  def types_of_train_and_carriage_are_not_equal?(carriage)
     carriage.type != type
   end
 
   def train_move?
-    @location >= length(@route)
+    @speed > 0
   end
 
   def remove_carriage!
@@ -95,3 +125,10 @@ class Train
     @location -= 1
   end
 end
+__END__
+require_relative 'carriage'
+train = Train.new(12345)
+train.add_carriage(Carriage.new)
+train.add_carriage(Carriage.new)
+b = proc {|a| puts a}
+train.act_with_carriage_list {|a| puts "#{a} - ggashas" }

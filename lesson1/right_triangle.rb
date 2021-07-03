@@ -5,8 +5,9 @@ class Right_triangle
     @b = b
     @c = c
   end
+
   def main
-    puts'Triagle is:'
+    puts 'Triagle is:'
     check_isosceles
 
     if @a == @b && @b == @c
@@ -14,29 +15,25 @@ class Right_triangle
     else
       @a **= 2
       @b **= 2
-      @c **=2
+      @c**2
       check90
     end
+  end
 
-  end
   def check_isosceles
-    if @a == @b or @a == @c or @b == @c
-      puts 'isosceles'
-    end
+    puts 'isosceles' if (@a == @b) || (@a == @c) || (@b == @c)
   end
+
   def check90
-    if @a == @b + @c or @b == @a +@c or @c == @a + @b
-      puts 'right triangle'
-    end
+    puts 'right triangle' if (@a == @b + @c) || (@b == @a + @c) || (@c == @a + @b)
   end
 end
 
-
-puts'side a'
+puts 'side a'
 a = gets.to_i
-puts'side b'
+puts 'side b'
 b = gets.to_i
-puts'side c'
+puts 'side c'
 c = gets.to_i
 User = Right_triangle.new(a, b, c)
 User.main
