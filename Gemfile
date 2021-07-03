@@ -6,9 +6,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # gem "rails"
 
-group :development do
-  gem 'byebug'
-  gem 'factory_bot'
-  gem 'rspec'
-  gem 'rubocop'
-end
+gem 'byebug'
+gem 'factory_bot'
+gem 'rspec'
+gem 'rubocop'

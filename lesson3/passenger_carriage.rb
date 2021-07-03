@@ -1,13 +1,11 @@
 require_relative 'carriage'
 class PassengerCarriage < Carriage
-  # include Manufacturer
-  # include InstanceCounter --- Is it needed?
   attr_reader :taked_space
 
   def initialize(number_of_space = 50)
     @taked_space = 0
     @number_of_space = number_of_space
-    register_instance
+    super()
   end
 
   def take_space
@@ -17,7 +15,7 @@ class PassengerCarriage < Carriage
   end
 
   def rid_space
-    return 'you dont have passengers' if @taked_space <= 0
+    return 'you dont have passengers' if @taked_space.zero?
 
     @taked_space -= 1
   end

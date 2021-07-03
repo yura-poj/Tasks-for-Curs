@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 require_relative 'carriage'
+
 class CargoCarriage < Carriage
   attr_reader :taked_space
 
@@ -15,7 +18,7 @@ class CargoCarriage < Carriage
   end
 
   def rid_space
-    return 'you dont have cargo' if @taked_space <= 0
+    return 'you dont have cargo' if @taked_space.zero?
 
     @taked_space -= 1
   end

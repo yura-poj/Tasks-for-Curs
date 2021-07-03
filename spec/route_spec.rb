@@ -1,9 +1,12 @@
 require 'spec_helper'
 require_relative '../lesson3/route'
-
+require 'byebug'
 RSpec.describe Route do
-  subject { described_class.new(start_station: stations.first, finish_station: stations.last) }
   let(:stations) { build_list(:station, 3) }
+  subject do
+    described_class.new(start_station: stations.first, finish_station: stations.last)
+  end
+
 
   describe '#delete_station' do
     before { subject.add_station(station: stations[1]) }

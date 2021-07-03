@@ -3,16 +3,16 @@ require_relative '../lesson3/passenger_carriage'
 
 RSpec.describe PassengerCarriage do
   # subject {build(:passenger_carriage )}
-  subject { described_class.new(number_of_seats: 50) }
+  subject { described_class.new }
 
-  describe 'free_seats' do
+  describe 'free_space' do
     before do
-      subject.take_seat
-      subject.take_seat
-      subject.rid_seat
+      subject.take_space
+      subject.take_space
+      subject.rid_space
     end
     it 'return number of free seats' do
-      expect(subject.free_seats).to eq(49)
+      expect(subject.free_space).to eq(49)
     end
   end
 end

@@ -14,7 +14,12 @@ require_relative 'passenger_train'
 class Conductor
   def initialize
     @greeting = "0 - exit\n 1 - act with stations \n2 - act with route \n3 - act with train"
-    @guide_about_staions = "0 - exit to back \n1 - make station \n2 - check list of stations \n3 - check list of trains on station"
+    @guide_about_staions = <<~HERE
+      0 - exit to back
+      1 - make station
+      2 - check list of stations
+      3 - check list of trains on station
+    HERE
     @guide_about_route = '0 - back 1 - create 2 - act with stations'
     @guide_about_train = '0 - back 1 - create 2 - choose train'
     @trains = []
@@ -113,7 +118,7 @@ class Conductor
     puts 'Enter a number'
     @trains.push(obj_with_type.new(gets.chomp))
     puts "You create #{@trains.last.number} train"
-  rescue Exception => e
+  rescue StandardError => e
     puts e.message
     puts "try again...\n"
     retry
@@ -200,6 +205,7 @@ class Conductor
   end
 
   def puts_list_of_trains_on_station(station)
+    number = 0
     station.each_train do |station|
       puts "#{number} - #{station}"
       number += 1
@@ -218,7 +224,7 @@ class Conductor
     puts 'Enter a name'
     @stations.push(Station.new(gets.chomp))
     puts "You create #{@stations.last.name} station"
-  rescue Exception => e
+  rescue StandardError => e
     puts e.message
     puts "try again...\n"
     retry
@@ -230,7 +236,7 @@ class Conductor
     begin
       @routes.push(Route.new(start_station: @stations[gets.to_i], finish_station: @stations[gets.to_i]))
       puts "You create #{@routes.last} station"
-    rescue Exception => e
+    rescue StandardError => e
       puts e.message
     end
   end

@@ -24,11 +24,11 @@ class Station
   end
 
   def add_train(train)
-    @trains_list.push(train)
+    @trains_list << train
   end
 
   # type is :cargo or :passenger
-  def return_trains_on_type(type)
+  def return_trains_by_type(type)
     (@trains_list.map { |a| a if a.type == type }).compact
   end
 
